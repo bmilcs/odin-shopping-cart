@@ -1,4 +1,14 @@
 import { useEffect, useState } from "react";
+import AddCardIcon from "./assets/AddCardIcon";
+import AddShoppingCartIcon from "./assets/AddShoppingCartIcon";
+import CreditCardIcon from "./assets/CreditCardIcon";
+import LocalShippingIcon from "./assets/LocalShippingIcon";
+import PaymentsIcon from "./assets/PaymentsIcon";
+import ReedemIcon from "./assets/RedeemIcon";
+import SellIcon from "./assets/SellIcon";
+import ShoppingBagIcon from "./assets/ShoppingBagIcon";
+import ShoppingCartIcon from "./assets/ShoppingCartIcon";
+import StorefrontIcon from "./assets/StorefrontIcon";
 
 // Brainstorm/Pseudo-code
 
@@ -13,6 +23,7 @@ import { useEffect, useState } from "react";
 //    Home
 //    Shopping
 //      Categories Bar (Sticky Bar)
+//      Sort by Price, by Category
 //      Product Grid
 //        Product Cards
 //          Image
@@ -25,8 +36,12 @@ import { useEffect, useState } from "react";
 //      List of products
 //      Subtotal
 //      Checkout Button
+//      Credit Card Type Accept
+//      Promo Code Option
 //  Footer
 //    GitHub Icon / Link
+//    Newsletter Signup
+//    Page Links
 
 function App() {
   const [productList, setProductList] = useState([]);
@@ -56,7 +71,19 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Best Store Ever</h1>
+      <h1>facade</h1>
+
+      <AddCardIcon />
+      <AddShoppingCartIcon />
+      <CreditCardIcon />
+      <LocalShippingIcon />
+      <PaymentsIcon />
+      <ReedemIcon />
+      <SellIcon />
+      <ShoppingBagIcon />
+      <ShoppingCartIcon />
+      <StorefrontIcon />
+
       {/* {weaponList.map((weapon) => {
         return (
           <>

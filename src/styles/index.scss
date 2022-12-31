@@ -26,7 +26,7 @@
 }
 
 body {
-  font-family: --ff-main;
+  font-family: var(--ff-main);
   color: var(--clr-neutral-900);
   background: var(--clr-neutral-100);
   font-weight: var(--fw-l);
