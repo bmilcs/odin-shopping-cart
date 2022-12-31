@@ -10,6 +10,8 @@ Welcome to Bryan Miller's Shopping Cart Project, the [twenty-first assignment](h
   - Hooks
     - `useState`
     - `useEffect` (wasn't necessary but used it anyways)
+- API & Async JavaScript
+  - [Fake Store API](https://github.com/keikaavousi/fake-store-api)
 - SASS
 
 ## Summary
