@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import AddShoppingCartIcon from "../assets/AddShoppingCartIcon";
+import ProductCard from "../components/ProductCard";
 
 function Shop() {
   const [productList, setProductList] = useState([]);
@@ -10,13 +10,18 @@ function Shop() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("fetch run");
-      setIsLoading(true);
-      const response = await fetch("https://fakestoreapi.com/products");
-      const data = await response.json();
-      localStorage.setItem("facadeItems", JSON.stringify(data));
-      setIsLoading(false);
-      setProductList(data);
+      try {
+        console.log("fetch run");
+        setIsLoading(true);
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        localStorage.setItem("facadeItems", JSON.stringify(data));
+        setIsLoading(false);
+        setProductList(data);
+      } catch (error) {
+        console.warn("Error!!!!");
+        console.log(error);
+      }
     };
 
     if ("facadeItems" in localStorage) {
@@ -34,18 +39,7 @@ function Shop() {
         <h2>Loading items...</h2>
       ) : (
         productList.map((item) => {
-          return (
-            <>
-              <p>{item.category}</p>
-              <AddShoppingCartIcon />
-
-              <p>{item.rating.rate} / 5.0 Stars</p>
-              <h2>{item.title}</h2>
-              <h3>${item.price}</h3>
-              <p>{item.description}</p>
-              <img src={item.image} alt={item.title} />
-            </>
-          );
+          return <ProductCard itemDetails={item} />;
         })
       )}
     </>
