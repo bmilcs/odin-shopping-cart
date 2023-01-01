@@ -1,4 +1,16 @@
-function App() {}
+import NavBar from "./components/NavBar";
+import Router from "./Router";
+
+function App() {
+  return (
+    <>
+      <NavBar />
+      <main>
+        <Router />
+      </main>
+    </>
+  );
+}
 
 export default App;
 
