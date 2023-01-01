@@ -1,47 +1,64 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import "../styles/Shop.scss";
 
 function Shop() {
   const [productList, setProductList] = useState([]);
+  const [viewList, setViewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.count("Render Count");
+  const sortProductsByCategory = (products) => {
+    return products.reduce((sorted, item) => {
+      const { category, ...rest } = item;
+      sorted[category] = sorted[category] || [];
+      sorted[category].push(rest);
+      return sorted;
+    }, {});
+  };
+
+  const viewElectronics = () => setViewList(productList["electronics"]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        console.log("fetch run");
         setIsLoading(true);
         const response = await fetch("https://fakestoreapi.com/products");
         const data = await response.json();
-        localStorage.setItem("facadeItems", JSON.stringify(data));
+        // fake store api is slow: improve performance on page switching
+        const sortedData = sortProductsByCategory(data);
+        localStorage.setItem("facadeItems", JSON.stringify(sortedData));
+        setProductList(sortedData);
+        setViewList(sortedData.electronics);
         setIsLoading(false);
-        setProductList(data);
       } catch (error) {
-        console.warn("Error");
-        console.log(error);
+        console.warn(`Facade Error: ${error}`);
       }
     };
 
     if ("facadeItems" in localStorage) {
-      console.log("localstorage");
       setIsLoading(false);
-      setProductList(JSON.parse(localStorage.getItem("facadeItems")));
+      const storedData = JSON.parse(localStorage.getItem("facadeItems"));
+      setProductList(storedData);
+      setViewList(storedData.electronics);
     } else fetchProducts();
   }, []);
 
+  console.count("Render Called");
+
   return (
     <div className="inside">
-      <h1>Shop</h1>
+      <h2 className="page-header">Shop</h2>
 
-      {isLoading ? (
-        <h2>Loading items...</h2>
-      ) : (
-        productList.map((item) => {
-          return <ProductCard itemDetails={item} key={item.id} />;
-        })
-      )}
+      <div className="product-grid">
+        {isLoading ? (
+          <h2>Loading items...</h2>
+        ) : (
+          [...viewList].sort().map((item) => {
+            return <ProductCard itemDetails={item} key={item.id} />;
+          })
+        )}
+      </div>
     </div>
   );
 }
