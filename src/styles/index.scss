@@ -28,6 +28,10 @@
   // border: 1px solid #cdcdcd;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family: var(--ff-main);
   color: var(--clr-neutral-900);
