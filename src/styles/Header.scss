@@ -1,0 +1,15 @@
+header {
+  background: var(--clr-neutral-900);
+  color: white;
+}
+
+header .inside {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+}
+
+.page-title {
+  font-size: 4rem;
+}

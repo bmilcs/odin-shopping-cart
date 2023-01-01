@@ -19,7 +19,7 @@ function Shop() {
         setIsLoading(false);
         setProductList(data);
       } catch (error) {
-        console.warn("Error!!!!");
+        console.warn("Error");
         console.log(error);
       }
     };
@@ -32,17 +32,17 @@ function Shop() {
   }, []);
 
   return (
-    <>
+    <div className="inside">
       <h1>Shop</h1>
 
       {isLoading ? (
         <h2>Loading items...</h2>
       ) : (
         productList.map((item) => {
-          return <ProductCard itemDetails={item} />;
+          return <ProductCard itemDetails={item} key={item.id} />;
         })
       )}
-    </>
+    </div>
   );
 }
 

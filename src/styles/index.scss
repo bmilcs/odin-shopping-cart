@@ -23,6 +23,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  // debugging:
+  // border: 1px solid #cdcdcd;
 }
 
 body {
@@ -34,4 +37,8 @@ body {
 
 p {
   line-height: 1.7;
+}
+
+img {
+  width: 100%;
 }
