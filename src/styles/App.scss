@@ -1,5 +1,19 @@
 .inside {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  min-height: 100vh;
+}
+
+main {
+  background: linear-gradient(
+    to bottom right,
+    var(--clr-neutral-200),
+    var(--clr-neutral-300)
+  );
 }

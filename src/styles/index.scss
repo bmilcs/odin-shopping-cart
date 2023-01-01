@@ -1,20 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,900;1,300;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@900&family=Roboto+Condensed:wght@400;700&display=swap");
 
 :root {
-  --ff-main: "Merriweather", serif;
-  --fw-b: 900;
+  --ff-title: "Merriweather", serif;
+  --ff-main: "Roboto Condensed", sans-serif;
+
+  --fw-b: 700;
   --fw-r: 400;
-  --fw-t: 300;
 
-  --clr-neutral-100: #f3f3f3;
+  --clr-neutral-100: #fff;
+  --clr-neutral-200: #f3f3f3;
+  --clr-neutral-300: #a1a1a1;
+  --clr-neutral-800: #1d1d1d;
   --clr-neutral-900: #111111;
+  --clr-green: #26a46e;
+  --clr-red: #b82323;
 
-  --border-radius-100: 0.35rem;
+  --border-radius-100: 0.5rem;
 
   --box-shadow-100: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   --box-shadow-200: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+
+  --transition: all 0.2s ease-in-out;
 }
 
 *,
@@ -35,7 +43,7 @@ html {
 body {
   font-family: var(--ff-main);
   color: var(--clr-neutral-900);
-  background: var(--clr-neutral-100);
+  background: var(--clr-neutral-200);
   font-weight: var(--fw-l);
 }
 
