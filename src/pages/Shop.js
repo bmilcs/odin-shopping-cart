@@ -4,11 +4,14 @@ import AddShoppingCartIcon from "../assets/AddShoppingCartIcon";
 
 function Shop() {
   const [productList, setProductList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchProducts = async () => {
       const response = await fetch("https://fakestoreapi.com/products");
       const json = await response.json();
+      setIsLoading(false);
       setProductList(json);
     };
     fetchProducts();
@@ -17,20 +20,25 @@ function Shop() {
   return (
     <>
       <h1>Shop</h1>
-      {productList.map((item) => {
-        return (
-          <>
-            <p>{item.category}</p>
-            <AddShoppingCartIcon />
 
-            <p>{item.rating.rate} / 5.0 Stars</p>
-            <h2>{item.title}</h2>
-            <h3>${item.price}</h3>
-            <p>{item.description}</p>
-            <img src={item.image} />
-          </>
-        );
-      })}
+      {isLoading ? (
+        <h2>Loading items...</h2>
+      ) : (
+        productList.map((item) => {
+          return (
+            <>
+              <p>{item.category}</p>
+              <AddShoppingCartIcon />
+
+              <p>{item.rating.rate} / 5.0 Stars</p>
+              <h2>{item.title}</h2>
+              <h3>${item.price}</h3>
+              <p>{item.description}</p>
+              <img src={item.image} />
+            </>
+          );
+        })
+      )}
     </>
   );
 }
