@@ -1,10 +1,11 @@
-import NavBar from "./components/NavBar";
+import Header from "./components/Header";
 import Router from "./Router";
+import "./styles/App.scss";
 
 function App() {
   return (
     <>
-      <NavBar />
+      <Header />
       <main>
         <Router />
       </main>
