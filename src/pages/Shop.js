@@ -6,15 +6,24 @@ function Shop() {
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.count("Render Count");
+
   useEffect(() => {
-    setIsLoading(true);
     const fetchProducts = async () => {
+      console.log("fetch run");
+      setIsLoading(true);
       const response = await fetch("https://fakestoreapi.com/products");
-      const json = await response.json();
+      const data = await response.json();
+      localStorage.setItem("facadeItems", JSON.stringify(data));
       setIsLoading(false);
-      setProductList(json);
+      setProductList(data);
     };
-    fetchProducts();
+
+    if ("facadeItems" in localStorage) {
+      console.log("localstorage");
+      setIsLoading(false);
+      setProductList(JSON.parse(localStorage.getItem("facadeItems")));
+    } else fetchProducts();
   }, []);
 
   return (
@@ -34,7 +43,7 @@ function Shop() {
               <h2>{item.title}</h2>
               <h3>${item.price}</h3>
               <p>{item.description}</p>
-              <img src={item.image} />
+              <img src={item.image} alt={item.title} />
             </>
           );
         })
