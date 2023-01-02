@@ -49,3 +49,13 @@ nav a:active {
     transform: translateY(0px);
   }
 }
+
+.cart-quantity {
+  padding: 0.3rem 0.5rem;
+  margin-left: 0.1rem;
+  aspect-ratio: 1/1;
+  background: var(--clr-blue);
+  color: var(--clr-neutral-100);
+  border-radius: 50%;
+  font-weight: bold;
+}

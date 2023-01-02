@@ -15,7 +15,10 @@ function NavBar({ cartQuantity }) {
         </li>
         <li>
           <Link to="/cart">
-            Cart {cartQuantity === 0 ? null : <span>({cartQuantity})</span>}
+            Cart{" "}
+            {cartQuantity === 0 ? null : (
+              <span className="cart-quantity">{cartQuantity}</span>
+            )}
           </Link>
         </li>
       </ul>
