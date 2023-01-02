@@ -2,12 +2,12 @@ import React from "react";
 import NavBar from "./NavBar";
 import "../styles/Header.scss";
 
-function Header() {
+function Header({ cartQuantity }) {
   return (
     <header>
       <div className="inside">
         <h1 className="page-title">facade</h1>
-        <NavBar />
+        <NavBar cartQuantity={cartQuantity} />
       </div>
     </header>
   );

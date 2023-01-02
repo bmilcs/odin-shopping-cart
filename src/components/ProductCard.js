@@ -8,8 +8,10 @@ function ProductCard({
     price,
     description,
     image,
+    id,
     rating: { rate },
   },
+  onAddToCart,
 }) {
   return (
     <div className="product-card">

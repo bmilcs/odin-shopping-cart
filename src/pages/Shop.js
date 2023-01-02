@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import "../styles/Shop.scss";
 
-function Shop() {
+function Shop({ onAddToCart }) {
   const [productList, setProductList] = useState([]);
   const [viewList, setViewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +55,13 @@ function Shop() {
           <p>Loading items...</p>
         ) : (
           [...viewList].sort().map((item) => {
-            return <ProductCard itemDetails={item} key={item.id} />;
+            return (
+              <ProductCard
+                itemDetails={item}
+                key={item.id}
+                onAddToCart={onAddToCart}
+              />
+            );
           })
         )}
       </div>

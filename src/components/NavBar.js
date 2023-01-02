@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/NavBar.scss";
 
-function NavBar() {
+function NavBar({ cartQuantity }) {
+  console.log("cartQuantity", cartQuantity);
   return (
     <nav>
       <ul>
@@ -13,7 +14,9 @@ function NavBar() {
           <Link to="/shop">Shop</Link>
         </li>
         <li>
-          <Link to="/cart">Cart</Link>
+          <Link to="/cart">
+            Cart {cartQuantity === 0 ? null : <span>({cartQuantity})</span>}
+          </Link>
         </li>
       </ul>
     </nav>
