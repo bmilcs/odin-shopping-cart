@@ -52,7 +52,7 @@ function Shop() {
 
       <div className="product-grid">
         {isLoading ? (
-          <h2>Loading items...</h2>
+          <p>Loading items...</p>
         ) : (
           [...viewList].sort().map((item) => {
             return <ProductCard itemDetails={item} key={item.id} />;
