@@ -6,26 +6,27 @@ import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import Error from "./pages/Error";
 import "./styles/App.scss";
+// import { loadFromLocalStorage, saveToLocalStorage } from "./util/storage";
 
 function App() {
+  const [productList, setProductList] = useState({});
   const [cart, setCart] = useState({});
   const [cartQty, setCartQty] = useState(0);
+  // const PRODUCT_LIST_KEY = "facadeProductList";
+  // const CART_KEY = "facadeCart";
 
-  const handleAddToCart = (e) => {
-    const {
-      dataset: { product_id: productID },
-    } = e.target;
+  // on first render
+  // attempt to load cart & productlist from localstorage
+  // useEffect(() => {
+  //   const cartData = loadFromLocalStorage(CART_KEY);
+  //   if (cartData) setCart(cartData);
+  //   const productListData = loadFromLocalStorage(PRODUCT_LIST_KEY);
+  //   if (productListData) setProductList(productListData);
+  // }, []);
 
-    setCart((prev) => ({
-      ...prev,
-      [productID]: {
-        quantity: (prev[productID] ? prev[productID].quantity : 0) + 1,
-      },
-    }));
-  };
-
+  // on cart change, update cart quantity
   useEffect(() => {
-    const getCartQuantity = () => {
+    const getCartItemCount = () => {
       let totalQuantity = 0;
       for (const key in cart) {
         const product = cart[key];
@@ -33,9 +34,23 @@ function App() {
       }
       return totalQuantity;
     };
-    const newQuantity = getCartQuantity();
-    setCartQty(newQuantity);
+    const cartQuantity = getCartItemCount();
+    setCartQty(cartQuantity);
+    // saveToLocalStorage(CART_KEY, cart);
   }, [cart]);
+
+  // add product to cart: { productID: quantity: 1, ...}
+  const handleAddToCart = (e) => {
+    const {
+      dataset: { product_id: productID },
+    } = e.target;
+    setCart((prev) => ({
+      ...prev,
+      [productID]: {
+        quantity: (prev[productID] ? prev[productID].quantity : 0) + 1,
+      },
+    }));
+  };
 
   return (
     <>
@@ -46,7 +61,13 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route
             path="/shop"
-            element={<Shop onAddToCart={handleAddToCart} />}
+            element={
+              <Shop
+                onAddToCart={handleAddToCart}
+                productList={productList}
+                setProductList={setProductList}
+              />
+            }
           />
           <Route path="/cart" element={<Cart cartQuantity={cart} />} />
           <Route path="/*" element={<Error />} />

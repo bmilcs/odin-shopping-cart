@@ -2,9 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import "../styles/Shop.scss";
+import { saveToLocalStorage } from "../util/storage";
 
-function Shop({ onAddToCart }) {
-  const [productList, setProductList] = useState([]);
+function Shop({ onAddToCart, productList, setProductList }) {
   const [viewList, setViewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +27,7 @@ function Shop({ onAddToCart }) {
         const data = await response.json();
         // fake store api is slow: improve performance on page switching
         const sortedData = sortProductsByCategory(data);
-        localStorage.setItem("facadeItems", JSON.stringify(sortedData));
+        localStorage.setItem("facadeProductList", JSON.stringify(sortedData));
         setProductList(sortedData);
         setViewList(sortedData.electronics);
         setIsLoading(false);
@@ -36,15 +36,13 @@ function Shop({ onAddToCart }) {
       }
     };
 
-    if ("facadeItems" in localStorage) {
+    if ("facadeProductList" in localStorage) {
       setIsLoading(false);
-      const storedData = JSON.parse(localStorage.getItem("facadeItems"));
+      const storedData = JSON.parse(localStorage.getItem("facadeProductList"));
       setProductList(storedData);
       setViewList(storedData.electronics);
     } else fetchProducts();
   }, []);
-
-  console.count("Render Called");
 
   return (
     <div className="inside">

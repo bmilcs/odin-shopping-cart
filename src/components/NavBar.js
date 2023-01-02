@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/NavBar.scss";
 
 function NavBar({ cartQuantity }) {
-  console.log("cartQuantity", cartQuantity);
   return (
     <nav>
       <ul>
