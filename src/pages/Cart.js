@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../styles/Cart.scss";
 
 function Cart({ cartQty, cart, productList }) {
   const [cartProductInfo, setCartProductInfo] = useState([]);
@@ -23,12 +24,17 @@ function Cart({ cartQty, cart, productList }) {
       ) : (
         cartProductInfo.map((product) => {
           return (
-            <div className="product-wrapper">
-              <img src={product.image} alt="" />
-              <h3>{product.title}</h3>
-              <p>{product.quantity}</p>
-              <p>${product.price}</p>
-              <p>${product.price * product.quantity}</p>
+            <div className="cart-product-wrapper">
+              <img className="cart-product-image" src={product.image} alt="" />
+              <h3 className="cart-product-title">{product.title}</h3>
+              <p className="cart-product-quantity">{product.quantity}</p>
+              <p className="cart-product-price-unit">${product.price}</p>
+              <p
+                className="
+                product-price-total"
+              >
+                ${product.price * product.quantity}
+              </p>
             </div>
           );
         })

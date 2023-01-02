@@ -1,0 +1,13 @@
+.cart-product-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+.cart-product-image {
+  background: var(--clr-neutral-100);
+  aspect-ratio: 1/1;
+  max-width: 200px;
+  object-fit: contain;
+}
