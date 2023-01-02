@@ -8,14 +8,14 @@ function Shop({ onAddToCart, productList, setProductList }) {
   const [viewList, setViewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const sortProductsByCategory = (products) => {
-    return products.reduce((sorted, item) => {
-      const { category, ...rest } = item;
-      sorted[category] = sorted[category] || [];
-      sorted[category].push(rest);
-      return sorted;
-    }, {});
-  };
+  // const sortProductsByCategory = (products) => {
+  //   return products.reduce((sorted, item) => {
+  //     const { category, ...rest } = item;
+  //     sorted[category] = sorted[category] || [];
+  //     sorted[category].push(rest);
+  //     return sorted;
+  //   }, {});
+  // };
 
   const viewElectronics = () => setViewList(productList["electronics"]);
 
@@ -26,10 +26,10 @@ function Shop({ onAddToCart, productList, setProductList }) {
         const response = await fetch("https://fakestoreapi.com/products");
         const data = await response.json();
         // fake store api is slow: improve performance on page switching
-        const sortedData = sortProductsByCategory(data);
-        localStorage.setItem("facadeProductList", JSON.stringify(sortedData));
-        setProductList(sortedData);
-        setViewList(sortedData.electronics);
+        // const sortedData = sortProductsByCategory(data);
+        localStorage.setItem("facadeProductList", JSON.stringify(data));
+        setProductList(data);
+        setViewList(data);
         setIsLoading(false);
       } catch (error) {
         console.warn(`Facade Error: ${error}`);
@@ -38,9 +38,9 @@ function Shop({ onAddToCart, productList, setProductList }) {
 
     if ("facadeProductList" in localStorage) {
       setIsLoading(false);
-      const storedData = JSON.parse(localStorage.getItem("facadeProductList"));
-      setProductList(storedData);
-      setViewList(storedData.electronics);
+      const data = JSON.parse(localStorage.getItem("facadeProductList"));
+      setProductList(data);
+      setViewList(data);
     } else fetchProducts();
   }, []);
 

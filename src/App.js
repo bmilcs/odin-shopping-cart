@@ -69,7 +69,12 @@ function App() {
               />
             }
           />
-          <Route path="/cart" element={<Cart cartQuantity={cart} />} />
+          <Route
+            path="/cart"
+            element={
+              <Cart cart={cart} cartQty={cartQty} productList={productList} />
+            }
+          />
           <Route path="/*" element={<Error />} />
         </Routes>
       </main>
