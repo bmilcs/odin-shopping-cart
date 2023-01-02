@@ -5,9 +5,10 @@ header {
 
 header .inside {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
 }
 
 .page-title {
