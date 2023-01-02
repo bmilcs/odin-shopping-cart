@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "./Button";
 import "../styles/ProductCard.scss";
+import "../styles/Button.scss";
 
 function ProductCard({
   itemDetails: {
@@ -21,7 +21,9 @@ function ProductCard({
       <p className="product-description">{description}</p>
       <div className="price-button-wrapper">
         <h3 className="product-price">${price}</h3>
-        <Button>Add To Cart</Button>
+        <button onClick={onAddToCart} data-product_id={id}>
+          Add To Cart
+        </button>
       </div>
     </div>
   );
