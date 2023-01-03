@@ -6,23 +6,51 @@ import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import Error from "./pages/Error";
 import "./styles/App.scss";
-// import { loadFromLocalStorage, saveToLocalStorage } from "./util/storage";
+import { loadLocalData, saveDataLocally } from "./util/storage";
 
 function App() {
   const [productList, setProductList] = useState({});
-  const [cart, setCart] = useState({});
+  const [viewList, setViewList] = useState([]);
+  const [cart, setCart] = useState([]);
   const [cartQty, setCartQty] = useState(0);
-  // const PRODUCT_LIST_KEY = "facadeProductList";
-  // const CART_KEY = "facadeCart";
+  const [isFetching, setIsFetching] = useState(true);
+  const CART_KEY = "facadeCart";
+  const INVENTORY_KEY = "facadeInventory";
+
+  // on first page load, regardless of route,
+  // load inventory from localstorage or fetch via api
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setIsFetching(true);
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        // fake store api is slow: improve performance
+        saveDataLocally(INVENTORY_KEY, data);
+        setProductList(data);
+        setViewList(data);
+        setIsFetching(false);
+      } catch (error) {
+        console.warn(`Facade Error: ${error}`);
+      }
+    };
+
+    if (INVENTORY_KEY in localStorage) {
+      setIsFetching(false);
+      const data = loadLocalData(INVENTORY_KEY);
+      setProductList(data);
+      setViewList(data);
+    } else {
+      fetchProducts();
+    }
+  }, []);
 
   // on first render
-  // attempt to load cart & productlist from localstorage
-  // useEffect(() => {
-  //   const cartData = loadFromLocalStorage(CART_KEY);
-  //   if (cartData) setCart(cartData);
-  //   const productListData = loadFromLocalStorage(PRODUCT_LIST_KEY);
-  //   if (productListData) setProductList(productListData);
-  // }, []);
+  // attempt to load cart from localstorage
+  useEffect(() => {
+    const cartData = loadLocalData(CART_KEY);
+    if (cartData) setCart(cartData);
+  }, []);
 
   // on cart change, update cart quantity
   useEffect(() => {
@@ -36,20 +64,65 @@ function App() {
     };
     const cartQuantity = getCartItemCount();
     setCartQty(cartQuantity);
-    // saveToLocalStorage(CART_KEY, cart);
+    saveDataLocally(CART_KEY, cart);
   }, [cart]);
 
-  // add product to cart: { productID: quantity: 1, ...}
   const handleAddToCart = (e) => {
     const {
       dataset: { product_id: productID },
     } = e.target;
+    const [productDetails] = productList.filter(
+      (product) => product.id === +productID
+    );
     setCart((prev) => ({
       ...prev,
       [productID]: {
+        ...productDetails,
         quantity: (prev[productID] ? prev[productID].quantity : 0) + 1,
       },
     }));
+  };
+
+  const onQuantityChange = (e) => {
+    const {
+      value: newValue,
+      dataset: { product_id: productID },
+    } = e.target;
+
+    const newNumber = +newValue;
+
+    if (newNumber && Number.isInteger(newNumber))
+      changeItemQuantity(productID, newNumber);
+  };
+
+  const onIncrementQuantity = (e) => {
+    const {
+      dataset: { product_id: productID },
+    } = e.target;
+    const quantity = getItemQuantity(productID);
+    changeItemQuantity(productID, quantity + 1);
+  };
+
+  const onDecrementQuantity = (e) => {
+    const {
+      dataset: { product_id: productID },
+    } = e.target;
+    const quantity = getItemQuantity(productID);
+    if (quantity > 1) changeItemQuantity(productID, quantity - 1);
+  };
+
+  const changeItemQuantity = (productID, newQuantity) => {
+    setCart((prev) => ({
+      ...prev,
+      [productID]: {
+        ...prev[productID],
+        quantity: newQuantity,
+      },
+    }));
+  };
+
+  const getItemQuantity = (productID) => {
+    return cart[productID].quantity;
   };
 
   return (
@@ -66,13 +139,23 @@ function App() {
                 onAddToCart={handleAddToCart}
                 productList={productList}
                 setProductList={setProductList}
+                viewList={viewList}
+                setViewList={setViewList}
+                isFetching={isFetching}
+                setIsFetching={setIsFetching}
               />
             }
           />
           <Route
             path="/cart"
             element={
-              <Cart cart={cart} cartQty={cartQty} productList={productList} />
+              <Cart
+                cart={cart}
+                cartQty={cartQty}
+                onQuantityChange={onQuantityChange}
+                onIncrementQuantity={onIncrementQuantity}
+                onDecrementQuantity={onDecrementQuantity}
+              />
             }
           />
           <Route path="/*" element={<Error />} />

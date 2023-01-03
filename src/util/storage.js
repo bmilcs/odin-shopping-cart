@@ -1,4 +1,4 @@
-const loadFromLocalStorage = (key) => {
+const loadLocalData = (key) => {
   if (key in localStorage) {
     const json = localStorage.getItem(key);
     const data = JSON.parse(json);
@@ -6,9 +6,9 @@ const loadFromLocalStorage = (key) => {
   }
 };
 
-const saveToLocalStorage = (key, data) => {
+const saveDataLocally = (key, data) => {
   const json = JSON.stringify(data);
   localStorage.setItem(key, json);
 };
 
-export { loadFromLocalStorage, saveToLocalStorage };
+export { loadLocalData, saveDataLocally };

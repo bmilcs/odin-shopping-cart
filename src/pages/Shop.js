@@ -2,12 +2,16 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import "../styles/Shop.scss";
-import { saveToLocalStorage } from "../util/storage";
 
-function Shop({ onAddToCart, productList, setProductList }) {
-  const [viewList, setViewList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
+function Shop({
+  onAddToCart,
+  productList,
+  setProductList,
+  isFetching,
+  setIsFetching,
+  viewList,
+  setViewList,
+}) {
   // const sortProductsByCategory = (products) => {
   //   return products.reduce((sorted, item) => {
   //     const { category, ...rest } = item;
@@ -17,39 +21,14 @@ function Shop({ onAddToCart, productList, setProductList }) {
   //   }, {});
   // };
 
-  const viewElectronics = () => setViewList(productList["electronics"]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch("https://fakestoreapi.com/products");
-        const data = await response.json();
-        // fake store api is slow: improve performance on page switching
-        // const sortedData = sortProductsByCategory(data);
-        localStorage.setItem("facadeProductList", JSON.stringify(data));
-        setProductList(data);
-        setViewList(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.warn(`Facade Error: ${error}`);
-      }
-    };
-
-    if ("facadeProductList" in localStorage) {
-      setIsLoading(false);
-      const data = JSON.parse(localStorage.getItem("facadeProductList"));
-      setProductList(data);
-      setViewList(data);
-    } else fetchProducts();
-  }, []);
+  // const viewElectronics = () => setViewList(productList["electronics"]);
 
   return (
     <div className="inside">
       <h2 className="page-header">Shop</h2>
 
       <div className="product-grid">
-        {isLoading ? (
+        {isFetching ? (
           <p>Loading items...</p>
         ) : (
           [...viewList].sort().map((item) => {
