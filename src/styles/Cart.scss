@@ -21,11 +21,6 @@
   object-fit: contain;
 }
 
-.cart-product-details-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
 .cart-product-title {
   font-weight: bold;
   font-size: 1.25rem;
@@ -51,7 +46,7 @@
   }
 
   .cart-product-quantity {
-    width: max-content;
+    width: 5ch;
     padding: 0.5rem;
 
     border: 0;
