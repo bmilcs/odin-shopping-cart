@@ -3,7 +3,7 @@
   grid-template-rows: repeat(3, min-content) 1fr;
 
   height: 100%;
-  padding: 1rem;
+  padding: min(2rem, 5vw) min(2rem, 5vw);
 
   background: var(--clr-neutral-100);
 

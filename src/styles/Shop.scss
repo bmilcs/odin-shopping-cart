@@ -2,8 +2,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-auto-rows: 1fr;
-  gap: min(2rem, 15vw);
+  gap: min(2.5rem, 15vw);
   align-items: top;
+
+  padding: 2.5vh 2.5vw;
 }
 
 .page-header {
