@@ -22,8 +22,9 @@
   }
 
   .cart-product-title {
-    font-weight: bold;
     font-size: 1.1rem;
+    font-weight: normal;
+    overflow: ellipsis;
   }
 
   .cart-quantity-wrapper {

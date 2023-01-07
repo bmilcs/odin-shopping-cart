@@ -24,8 +24,6 @@ function Shop({
 
   return (
     <div className="inside">
-      <h2 className="page-header">Shop</h2>
-
       <div className="product-grid">
         {isFetching ? (
           <p>Loading items...</p>
