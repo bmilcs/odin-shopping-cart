@@ -22,7 +22,7 @@ function ProductCard({
       <p className="product-rating">{rate} / 5.0 Stars</p>
       <p className="product-description">{description}</p>
       <div className="price-button-wrapper">
-        <h3 className="product-price">${price}</h3>
+        <h3 className="product-price">${price.toFixed(2)}</h3>
         <button onClick={onAddToCart} data-product_id={id}>
           Add To Cart
         </button>
