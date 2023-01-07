@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import splashImg from "../assets/splash-photo.jpg";
 import "../styles/Home.scss";
 function Home() {
@@ -13,9 +14,9 @@ function Home() {
             clothing for men and women, we have something for every taste and
             budget. Come explore and be inspired by our wide selection.
           </p>
-          <a href="/shop">
+          <Link to="/shop">
             <button className="hero-button">Shop Now</button>
-          </a>
+          </Link>
         </div>
         <img
           src={splashImg}
