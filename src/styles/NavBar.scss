@@ -1,9 +1,14 @@
 nav ul {
-  list-style: none;
-
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: min(3rem, 2.5vw);
+
+  list-style: none;
+
+  @media screen and (min-width: 600px) {
+    justify-content: flex-end;
+  }
 }
 
 nav a,

@@ -6,11 +6,17 @@ header {
 }
 
 header .inside {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
   align-items: center;
   gap: 0.25rem;
+
+  text-align: center;
+
+  @media screen and (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    text-align: left;
+  }
 }
 
 .page-title {
