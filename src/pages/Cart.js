@@ -8,34 +8,31 @@ function Cart({
   onIncrementQuantity,
   onDecrementQuantity,
 }) {
-  const [subTotal, setSubTotal] = useState(0);
-  const [shipping, setShipping] = useState(0);
-  const [taxes, setTaxes] = useState(0);
-  const [orderTotal, setOrderTotal] = useState(0);
+  const [orderSummary, setOrderSummary] = useState({});
 
+  const getSubtotal = () =>
+    Object.keys(cart)
+      .reduce((acc, cur) => {
+        return acc + cart[cur].price * cart[cur].quantity;
+      }, 0)
+      .toFixed(2);
+
+  const getShipping = () => (cartQty * 3.5).toFixed(2);
+
+  const getTaxes = () => (getSubtotal() * 0.05).toFixed(2);
+
+  const getTotal = () =>
+    (+getSubtotal() + +getTaxes() + +getShipping()).toFixed(2);
+
+  // on changes to the cart object, update the order summary details
   useEffect(() => {
-    setSubTotal(
-      Object.keys(cart)
-        .reduce((acc, cur) => {
-          return acc + cart[cur].price * cart[cur].quantity;
-        }, 0)
-        .toFixed(2)
-    );
+    setOrderSummary({
+      subtotal: getSubtotal(),
+      shipping: getShipping(),
+      taxes: getTaxes(),
+      total: getTotal(),
+    });
   }, [cart]);
-
-  useEffect(() => {
-    setShipping((cartQty * 3.5).toFixed(2));
-  }, [subTotal]);
-
-  useEffect(() => {
-    setTaxes((subTotal * 0.05).toFixed(2));
-  }, [shipping]);
-
-  useEffect(() => {
-    setOrderTotal((+subTotal + +taxes + +shipping).toFixed(2));
-  }, [taxes]);
-
-  console.count("render");
 
   return (
     <div className="inside">
@@ -98,13 +95,13 @@ function Cart({
         <h2 className="order-summary-title">Order Summary</h2>
         <div className="order-summary-wrapper">
           <p className="order-summary-label">Subtotal:</p>
-          <p className="order-subtotal">${subTotal}</p>
+          <p className="order-subtotal">${orderSummary.subtotal}</p>
           <p className="order-summary-label">Taxes:</p>
-          <p className="order-taxes">${taxes}</p>
+          <p className="order-taxes">${orderSummary.taxes}</p>
           <p className="order-summary-label">Shipping:</p>
-          <p className="order-shipping">${shipping}</p>
+          <p className="order-shipping">${orderSummary.shipping}</p>
           <p className="order-summary-label order-total-label">Total:</p>
-          <p className="order-total">${orderTotal}</p>
+          <p className="order-total">${orderSummary.total}</p>
         </div>
       </div>
     </div>
