@@ -1,10 +1,10 @@
 .shopping-cart-wrapper {
   display: grid;
   grid-template-columns: min-content 1fr min-content min-content;
-  // grid-template-columns: min-content 1fr min-content min-content;
-  gap: 1rem;
   align-items: center;
   justify-content: space-between;
+  // grid-template-columns: min-content 1fr min-content min-content;
+  gap: 1rem;
 
   border-radius: var(--border-radius-100);
 
@@ -94,5 +94,25 @@
   .order-total {
     font-weight: bold;
     font-size: 1.25rem;
+  }
+}
+
+.empty-shopping-cart-wrapper {
+  min-height: 80vh;
+  margin-top: 10vh;
+  text-align: center;
+
+  .empty-cart-image {
+    border-radius: var(--border-radius-100);
+    overflow: hidden;
+
+    border: 3px solid var(--clr-neutral-200);
+  }
+  .empty-cart-button {
+    margin-top: 5vh;
+    min-width: 40%;
+
+    font-size: 1.25rem;
+    text-transform: uppercase;
   }
 }
