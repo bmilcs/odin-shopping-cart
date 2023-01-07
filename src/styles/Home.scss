@@ -1,21 +1,22 @@
 .home-hero-section {
+  display: grid;
+  place-items: center;
+
+  padding: 5vh 5vw;
+
   background: var(--clr-neutral-100);
 
   .inside {
     display: grid;
     align-items: center;
     grid-auto-flow: dense;
-    column-gap: 5vw;
-    row-gap: 5vh;
+    gap: 5vh 5vw;
 
     @media screen and (min-width: 900px) {
       grid-template-columns: repeat(2, 1fr);
       justify-content: center;
     }
   }
-
-  padding-inline: 5vw;
-  padding-block: 5vh;
 
   .hero-text-wrapper {
     display: grid;
