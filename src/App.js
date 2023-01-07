@@ -88,11 +88,12 @@ function App() {
       value: newValue,
       dataset: { product_id: productID },
     } = e.target;
-
     const newNumber = +newValue;
-
-    if (newNumber && Number.isInteger(newNumber))
+    if (newNumber && Number.isInteger(newNumber)) {
       changeItemQuantity(productID, newNumber);
+    } else if (newNumber === 0) {
+      removeItemFromCart(productID);
+    }
   };
 
   const onIncrementQuantity = (e) => {
@@ -108,7 +109,11 @@ function App() {
       dataset: { product_id: productID },
     } = e.target;
     const quantity = getItemQuantity(productID);
-    if (quantity > 1) changeItemQuantity(productID, quantity - 1);
+    if (quantity > 1) {
+      changeItemQuantity(productID, quantity - 1);
+    } else {
+      removeItemFromCart(productID);
+    }
   };
 
   const changeItemQuantity = (productID, newQuantity) => {
@@ -119,6 +124,18 @@ function App() {
         quantity: newQuantity,
       },
     }));
+  };
+
+  const removeItemFromCart = (productID) => {
+    setCart(() => {
+      let newCart = {};
+      for (const id in cart) {
+        if (id !== productID) {
+          newCart = { ...newCart, [id]: { ...cart[id] } };
+        }
+      }
+      return newCart;
+    });
   };
 
   const getItemQuantity = (productID) => {
