@@ -6,145 +6,71 @@ import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import Error from "./pages/Error";
 import "./styles/App.scss";
-import { loadLocalData, saveDataLocally } from "./util/storage";
+import { getInventory } from "./util/inventoryData";
+import {
+  addProductToCart,
+  changeItemQuantityManually,
+  decrementCartItemQuantity,
+  incrementCartItemQuantity,
+  loadCartFromStorage,
+  updateCartTotalItemCount,
+} from "./util/cartUtilities";
 
 function App() {
-  const [productList, setProductList] = useState({});
-  const [viewList, setViewList] = useState([]);
+  const [productList, setProductList] = useState([]);
   const [cart, setCart] = useState([]);
-  const [cartQty, setCartQty] = useState(0);
+  const [cartTotalItemCount, setCartTotalItemCount] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
-  const CART_KEY = "facadeCart";
-  const INVENTORY_KEY = "facadeInventory";
 
-  // on first page load, regardless of route,
+  // on first page load, regardless of route
   // load inventory from localstorage or fetch via api
+  // and load cart from localstorage
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setIsFetching(true);
-        const response = await fetch("https://fakestoreapi.com/products");
-        const data = await response.json();
-        // fake store api is slow: improve performance
-        saveDataLocally(INVENTORY_KEY, data);
-        setProductList(data);
-        setViewList(data);
-        setIsFetching(false);
-      } catch (error) {
-        console.warn(`Facade Error: ${error}`);
-      }
-    };
-
-    if (INVENTORY_KEY in localStorage) {
-      setIsFetching(false);
-      const data = loadLocalData(INVENTORY_KEY);
-      setProductList(data);
-      setViewList(data);
-    } else {
-      fetchProducts();
-    }
+    getInventory(
+      "https://fakestoreapi.com/products",
+      setIsFetching,
+      setProductList
+    );
+    loadCartFromStorage(setCart);
   }, []);
 
-  // on first render
-  // attempt to load cart from localstorage
+  // on cart change, update cart total item count (displayed in header/navbar)
   useEffect(() => {
-    const cartData = loadLocalData(CART_KEY);
-    if (cartData) setCart(cartData);
-  }, []);
-
-  // on cart change, update cart quantity
-  useEffect(() => {
-    const getCartItemCount = () => {
-      let totalQuantity = 0;
-      for (const key in cart) {
-        const product = cart[key];
-        totalQuantity = totalQuantity + product.quantity;
-      }
-      return totalQuantity;
-    };
-    const cartQuantity = getCartItemCount();
-    setCartQty(cartQuantity);
-    saveDataLocally(CART_KEY, cart);
+    updateCartTotalItemCount(setCartTotalItemCount, cart);
   }, [cart]);
 
   const handleAddToCart = (e) => {
     const {
       dataset: { product_id: productID },
     } = e.target;
-    const [productDetails] = productList.filter(
-      (product) => product.id === +productID
-    );
-    setCart((prev) => ({
-      ...prev,
-      [productID]: {
-        ...productDetails,
-        quantity: (prev[productID] ? prev[productID].quantity : 0) + 1,
-      },
-    }));
+    addProductToCart(productID, productList, setCart);
   };
 
   const onQuantityChange = (e) => {
     const {
-      value: newValue,
+      value: newQuantity,
       dataset: { product_id: productID },
     } = e.target;
-    const newNumber = +newValue;
-    if (newNumber && Number.isInteger(newNumber)) {
-      changeItemQuantity(productID, newNumber);
-    } else if (newNumber === 0) {
-      removeItemFromCart(productID);
-    }
+    changeItemQuantityManually(productID, newQuantity, setCart);
   };
 
   const onIncrementQuantity = (e) => {
     const {
       dataset: { product_id: productID },
     } = e.target;
-    const quantity = getItemQuantity(productID);
-    changeItemQuantity(productID, quantity + 1);
+    incrementCartItemQuantity(productID, cart, setCart);
   };
 
   const onDecrementQuantity = (e) => {
     const {
       dataset: { product_id: productID },
     } = e.target;
-    const quantity = getItemQuantity(productID);
-    if (quantity > 1) {
-      changeItemQuantity(productID, quantity - 1);
-    } else {
-      removeItemFromCart(productID);
-    }
-  };
-
-  const changeItemQuantity = (productID, newQuantity) => {
-    setCart((prev) => ({
-      ...prev,
-      [productID]: {
-        ...prev[productID],
-        quantity: newQuantity,
-      },
-    }));
-  };
-
-  const removeItemFromCart = (productID) => {
-    setCart(() => {
-      let newCart = {};
-      for (const id in cart) {
-        if (id !== productID) {
-          newCart = { ...newCart, [id]: { ...cart[id] } };
-        }
-      }
-      return newCart;
-    });
-  };
-
-  const getItemQuantity = (productID) => {
-    return cart[productID].quantity;
+    decrementCartItemQuantity(productID, cart, setCart);
   };
 
   return (
     <>
-      <Header cartQuantity={cartQty} />
+      <Header cartQuantity={cartTotalItemCount} />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -155,11 +81,7 @@ function App() {
               <Shop
                 onAddToCart={handleAddToCart}
                 productList={productList}
-                setProductList={setProductList}
-                viewList={viewList}
-                setViewList={setViewList}
                 isFetching={isFetching}
-                setIsFetching={setIsFetching}
               />
             }
           />
@@ -168,7 +90,7 @@ function App() {
             element={
               <Cart
                 cart={cart}
-                cartQty={cartQty}
+                cartTotalItemCount={cartTotalItemCount}
                 onQuantityChange={onQuantityChange}
                 onIncrementQuantity={onIncrementQuantity}
                 onDecrementQuantity={onDecrementQuantity}

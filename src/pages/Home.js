@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import splashImg from "../assets/splash-photo.jpg";
 import "../styles/Home.scss";
+import splashImg from "../assets/splash-photo.jpg";
 
 function Home() {
   return (
