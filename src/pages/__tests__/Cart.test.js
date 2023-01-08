@@ -81,6 +81,8 @@ describe("empty shopping cart", () => {
   const onIncrementQuantity = jest.fn();
   const onQuantityChange = jest.fn();
   const onDecrementQuantity = jest.fn();
+  const onPromoChange = jest.fn();
+  const onPromoSubmit = jest.fn();
 
   it("empty cart image to appear", () => {
     // useHref error workaround
@@ -97,6 +99,8 @@ describe("empty shopping cart", () => {
                 onQuantityChange={onQuantityChange}
                 onIncrementQuantity={onIncrementQuantity}
                 onDecrementQuantity={onDecrementQuantity}
+                onPromoChange={onPromoChange}
+                onPromoSubmit={onPromoSubmit}
               />
             }
           />

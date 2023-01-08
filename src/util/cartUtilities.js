@@ -82,16 +82,18 @@ const removeItemFromCart = (productID, cart, setCart) => {
   });
 };
 
-const updateOrderSummary = (setOrderSummary, cart) => {
+const updateOrderSummary = (setOrderSummary, cart, discountPercentage = 0) => {
   const totalItemCount = getCartTotalItemsCount(cart);
 
-  const subtotal = getSubtotal(cart);
-  const shipping = getShipping(totalItemCount);
-  const taxes = getTaxes(+subtotal);
-  const total = getTotal(+subtotal, +shipping, +taxes);
+  const subtotal = getSubtotal(cart).toFixed(2);
+  const discount = getDiscount(subtotal, discountPercentage).toFixed(2);
+  const shipping = getShipping(totalItemCount).toFixed(2);
+  const taxes = getTaxes(subtotal).toFixed(2);
+  const total = getTotal(subtotal, shipping, taxes, discount).toFixed(2);
 
   setOrderSummary({
     subtotal: subtotal,
+    discount: discount,
     shipping: shipping,
     taxes: taxes,
     total: total,
@@ -99,24 +101,32 @@ const updateOrderSummary = (setOrderSummary, cart) => {
 };
 
 const getSubtotal = (cart) =>
-  Object.keys(cart)
-    .reduce((acc, cur) => {
-      return acc + cart[cur].price * cart[cur].quantity;
-    }, 0)
-    .toFixed(2);
+  +Object.keys(cart).reduce((acc, cur) => {
+    return acc + cart[cur].price * cart[cur].quantity;
+  }, 0);
+const getShipping = (itemCount) => +(itemCount * 3.5);
 
-const getShipping = (itemCount) => (itemCount * 3.5).toFixed(2);
+const getTaxes = (subtotal) => subtotal * 0.05;
 
-const getTaxes = (subtotal) => (subtotal * 0.05).toFixed(2);
+const getTotal = (subtotal, shipping, taxes, discount = 0) => {
+  return +subtotal + +shipping + +taxes - +discount;
+};
 
-const getTotal = (subtotal, shipping, taxes) =>
-  (subtotal + shipping + taxes).toFixed(2);
+const getDiscount = (subtotal, discountPercentage) =>
+  discountPercentage ? Number(subtotal * (discountPercentage / 100)) : 0;
+
+const getPromoDiscountPercentage = (promoCode) => {
+  if (/^20off$/gi.test(promoCode)) return 20;
+  if (/^10off$/gi.test(promoCode)) return 10;
+  return 0;
+};
 
 export {
   addProductToCart,
   changeCartItemQuantity,
   decrementCartItemQuantity,
   getCartTotalItemsCount,
+  getPromoDiscountPercentage,
   incrementCartItemQuantity,
   loadCartFromStorage,
   changeItemQuantityManually,

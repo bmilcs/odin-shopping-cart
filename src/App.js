@@ -11,6 +11,7 @@ import {
   addProductToCart,
   changeItemQuantityManually,
   decrementCartItemQuantity,
+  getPromoDiscountPercentage,
   incrementCartItemQuantity,
   loadCartFromStorage,
   updateCartTotalItemCount,
@@ -19,6 +20,8 @@ import {
 function App() {
   const [productList, setProductList] = useState([]);
   const [cart, setCart] = useState([]);
+  const [promoCode, setPromoCode] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0);
   const [cartTotalItemCount, setCartTotalItemCount] = useState(0);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -68,6 +71,19 @@ function App() {
     decrementCartItemQuantity(productID, cart, setCart);
   };
 
+  const onPromoChange = (e) => {
+    const { value } = e.target;
+    setPromoCode(value);
+  };
+
+  const onPromoSubmit = (e) => {
+    e.preventDefault();
+    const promoCode = e.target.elements["promo"].value;
+    const discount = getPromoDiscountPercentage(promoCode);
+    setDiscountPercentage(discount);
+    setPromoCode("");
+  };
+
   return (
     <>
       <Header cartQuantity={cartTotalItemCount} />
@@ -94,6 +110,10 @@ function App() {
                 onQuantityChange={onQuantityChange}
                 onIncrementQuantity={onIncrementQuantity}
                 onDecrementQuantity={onDecrementQuantity}
+                onPromoChange={onPromoChange}
+                onPromoSubmit={onPromoSubmit}
+                promoCode={promoCode}
+                discountPercentage={discountPercentage}
               />
             }
           />
@@ -105,36 +125,3 @@ function App() {
 }
 
 export default App;
-
-// Brainstorm/Pseudo-code
-
-// Layout / Components
-
-// App
-//  Header (Static)
-//    Logo & Store name
-//    Navbar: Home, Shop
-//      Cart Logo (with item count)
-//  Main
-//    Home
-//    Shopping
-//      Categories Bar (Sticky Bar)
-//      Sort by Price, by Category
-//      Product Grid
-//        Product Cards
-//          Image
-//          Description
-//          Quantity
-//            Input:  # qty
-//            Buttons: +/- qty
-//          Button: Add to Cart
-//    Cart
-//      List of products
-//      Subtotal
-//      Checkout Button
-//      Credit Card Type Accept
-//      Promo Code Option
-//  Footer
-//    GitHub Icon / Link
-//    Newsletter Signup
-//    Page Links

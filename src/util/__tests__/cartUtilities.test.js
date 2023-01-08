@@ -18,8 +18,9 @@ describe("order summary math", () => {
   // mock setState function
   let summary;
   const setOrderSummary = (obj) => (summary = obj);
+  const discount = 10;
 
-  updateOrderSummary(setOrderSummary, fakeCart);
+  updateOrderSummary(setOrderSummary, fakeCart, discount);
 
   it("check subtotal value:", () => {
     expect(summary.subtotal).toBe("372.75");
@@ -34,6 +35,6 @@ describe("order summary math", () => {
   });
 
   it("check total value:", () => {
-    expect(summary.total).toBe("408.89");
+    expect(summary.total).toBe("371.62");
   });
 });

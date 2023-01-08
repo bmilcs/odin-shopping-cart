@@ -5,6 +5,7 @@ import emptyCartImg from "../assets/empty-cart.jpg";
 import { updateOrderSummary } from "../util/cartUtilities";
 import CartProduct from "../components/CartProduct";
 import OrderSummary from "../components/OrderSummary";
+import PromoCode from "../components/PromoCode";
 
 function Cart({
   cart,
@@ -12,18 +13,22 @@ function Cart({
   onQuantityChange,
   onIncrementQuantity,
   onDecrementQuantity,
+  onPromoChange,
+  onPromoSubmit,
+  promoCode,
+  discountPercentage,
 }) {
   const [orderSummary, setOrderSummary] = useState({});
 
-  // update order summary on cart changes
+  // update order summary on cart or discount % changes
   useEffect(() => {
-    updateOrderSummary(setOrderSummary, cart);
-  }, [cart]);
+    updateOrderSummary(setOrderSummary, cart, discountPercentage);
+  }, [cart, discountPercentage]);
 
   return (
     <div className="inside">
       {!cartTotalItemCount ? (
-        // empty cart image with button to return to shop
+        // empty cart: return image with button to return to shop
         <div className="empty-shopping-cart-wrapper">
           <img
             className="empty-cart-image"
@@ -36,7 +41,7 @@ function Cart({
           </Link>
         </div>
       ) : (
-        // {/* shopping cart item list, w/ -/+ buttons for changing qty*/}
+        // {/* filled cart: item list, w/ -/+ buttons for changing qty*/}
         <>
           <div className="cart-page-wrapper">
             <h1 className="cart-title">Shopping Cart</h1>
@@ -55,11 +60,21 @@ function Cart({
               })}
             </div>
 
-            {/* order summary */}
-            <OrderSummary orderSummary={orderSummary} />
+            <div className="promo-summary-wrapper">
+              <PromoCode
+                onPromoChange={onPromoChange}
+                onPromoSubmit={onPromoSubmit}
+                promoCode={promoCode}
+                discountPercentage={discountPercentage}
+              />
+              <OrderSummary
+                orderSummary={orderSummary}
+                discountPercentage={discountPercentage}
+              />
+              <button className="checkout-button">Check Out</button>
+            </div>
 
             {/* checkout button */}
-            <button className="checkout-button">Check Out</button>
           </div>
         </>
       )}
