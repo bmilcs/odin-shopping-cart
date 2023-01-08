@@ -1,12 +1,12 @@
-import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
-import Cart from "../Cart";
-import { getCartTotalItemsCount } from "../../util/cartUtilities";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
+import { getCartTotalItemsCount } from "../../util/cartUtilities";
+import Cart from "../Cart";
 
 describe("shopping cart tests", () => {
-  const fakeCart = {
+  const cart = {
     1: {
       id: 1,
       title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -20,14 +20,9 @@ describe("shopping cart tests", () => {
     },
   };
 
-  let cart = fakeCart;
-
   const cartTotalItemCount = getCartTotalItemsCount(cart);
-
   const onIncrementQuantity = jest.fn();
-
   const onQuantityChange = jest.fn();
-
   const onDecrementQuantity = jest.fn();
 
   it("cart item count function", () => {
@@ -87,11 +82,9 @@ describe("empty shopping cart", () => {
   const onQuantityChange = jest.fn();
   const onDecrementQuantity = jest.fn();
 
-  const RouterWrapper = ({ children }) => (
-    <MemoryRouter>{children}</MemoryRouter>
-  );
-
   it("empty cart image to appear", () => {
+    // useHref error workaround
+    // empty cart renders a button with a <Link> element in it
     render(
       <MemoryRouter>
         <Routes>
