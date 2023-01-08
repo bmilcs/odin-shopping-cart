@@ -6,7 +6,9 @@ function Header({ cartQuantity }) {
   return (
     <header>
       <div className="inside">
-        <h1 className="page-title">facade</h1>
+        <h1 className="page-title" data-testid="page-title">
+          facade
+        </h1>
         <NavBar cartQuantity={cartQuantity} />
       </div>
     </header>

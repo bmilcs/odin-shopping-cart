@@ -25,7 +25,12 @@ function Cart({
       {!cartTotalItemCount ? (
         // empty cart image with button to return to shop
         <div className="empty-shopping-cart-wrapper">
-          <img className="empty-cart-image" src={emptyCartImg} alt="" />
+          <img
+            className="empty-cart-image"
+            src={emptyCartImg}
+            alt="Empty shopping cart"
+            data-testid="empty-cart-image"
+          />
           <Link to="/shop">
             <button className="empty-cart-button">Fill me up!</button>
           </Link>

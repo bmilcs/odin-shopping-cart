@@ -14,6 +14,7 @@ function CartProduct({
         <button
           className="quantity-button"
           data-product_id={product.id}
+          data-testid={`decrement-${product.id}`}
           onClick={onDecrementQuantity}
         >
           -
@@ -22,12 +23,14 @@ function CartProduct({
           id={`${product.id}-quantity`}
           className="cart-product-quantity"
           data-product_id={product.id}
+          data-testid={`input-${product.id}`}
           value={product.quantity}
           onChange={onQuantityChange}
         />
         <button
           className="quantity-button"
           data-product_id={product.id}
+          data-testid={`increment-${product.id}`}
           onClick={onIncrementQuantity}
         >
           +
