@@ -202,13 +202,14 @@
 }
 
 .empty-shopping-cart-wrapper {
-  min-height: 80vh;
   margin-top: 10vh;
   text-align: center;
 
   .empty-cart-image {
     border-radius: var(--border-radius-100);
     overflow: hidden;
+    max-height: 60vh;
+    object-fit: cover;
 
     border: 3px solid var(--clr-neutral-200);
   }
