@@ -100,7 +100,33 @@ In summary, there are so many possibilities for a project like this, but I had t
 
 ## Screenshots
 
-In progress...
+> Desktop Home
+
+![desktop home](./screenshots/desktop-home.png)
+
+> Desktop Shop
+
+![desktop shop](./screenshots/desktop-shop.png)
+
+> Desktop Cart
+
+![desktop cart](./screenshots/desktop-cart.png)
+
+> Mobile Home
+
+![mobile home](./screenshots/mobile-home.png)
+
+> Mobile Shop
+
+![mobile shop](./screenshots/mobile-shop.png)
+
+> Mobile Cart 1
+
+![mobile cart](./screenshots/mobile-cart1.png)
+
+> Mobile Cart 2
+
+![mobile cart](./screenshots/mobile-cart2.png)
 
 ## Links
 
