@@ -24,28 +24,28 @@ Welcome to Bryan Miller's Shopping Cart Project, the [twenty-first assignment](h
 
 ## Summary
 
-For the third and final React project in the Odin Project cirriculum, we were tasked with developing a fake store with shopping cart. Here's how I attacked this project:
+For the third and final React project in the Odin Project cirriculum, we were tasked with developing a fake store with shopping cart. Here is how I approached it:
 
 1. Created a new repo utilizing `create-react-app`, `sass` and `react-router-dom` npm packages
 2. Collected resources: Fake Store API, icons, images & fonts
 3. Wrote out ideas & laid out file structure
 
-From there, I systemically broke the project down into smaller bite size chunks until I ended up with my final product.
+From there, I broke the project down into bite size chunks until I ended up with a final product.
 
 ### Fake Store API
 
-Working with an API was a great experience. My first choice was Best Buy's API, but they have prohibit personal & `.edu` email accounts. After testing a few other free API's, I settled on the [Fake Store API](https://fakestoreapi.com/).
+After testing a few free API's, I settled on the [Fake Store API](https://fakestoreapi.com/).
 
-It was the perfect choice for this project. However, it was quite slow during fetch calls. To improve UX, I moved the `fetch` call to the `/home` page, giving it a head start before the user clicks on the Store navigation link. In addition, I implemented `localStorage` to cache the results, improving speed & preventing unnecessary calls to this awesome free service.
+It was the perfect choice for this project. However, its response time varies, sometimes taking 5-10 seconds to load. To improve UX, the `fetch` calls were moved to the `/home` page, giving it a head start before the user navigates to the `/shop` page. Once fetched, the results are cache to `localStorage`, improving wait times & preventing unnecessary calls to a free service.
 
 ### `App.js` and Clean Code
 
-Storing `state` and handler callback functions in the App component became messy quickly. As this project grew in complexity, I opted to segment a good amount of logic into the `utils/` directory, which is then imported and used within `App.js`:
+Storing `state` and handler callback functions in the App component became messy quickly. As this project grew in complexity, I segmented the logic into the `utils/` directory, and then imported the functions back into `App.js`:
 
 - `utils/storage.js` contains localstorage utility functions
-- `utils/inventoryData.js` contains the logic for loading the inventory from `localStorage` or the `fetch` API
+- `utils/inventoryData.js` contains functions for loading the inventory from `localStorage` or the `fetch` API
 
-`utils/cartUtilities.js` contains the bulk of the logic for this application. State variables are defined in `App`, and then passed as a parameter to functions that are imported from `cartUtilities`. For example:
+`utils/cartUtilities.js` contains the bulk of the logic for this application. State variables are defined in `App`, and then passed as a parameters to functions imported from `cartUtilities`. For example:
 
 - `addProductToCart(productID, productList, setCart)`
 - `changeItemQuantityManually(productID, newQuantity, setCart);`
@@ -54,7 +54,7 @@ Storing `state` and handler callback functions in the App component became messy
 
 ### `Cart.js`
 
-The `orderSummary` state variable contains an object of the financial details for the cart and is updated with the `updateOrderSummary` function. `useEffect()` came in handy, allowing me to update the order summary any time the `cart` object or `discountPercentage` is changed:
+The `orderSummary` state variable contains an object of the financial details for the cart and is updated with the `updateOrderSummary` function. `useEffect()` came in handy, allowing me to update the order summary any time the `cart` object or `discountPercentage` changes:
 
 ```js
 // Cart.js
@@ -92,7 +92,7 @@ As much as I would've liked to continue working on this project, I didn't want t
 - Size drop downs for clothing & jewelry items
 - Animation and transitions between pages
 - Checkout page with address & payment fields
-- Better UI / UX experience: better color scheme, typography, keyboard navigation, drop down menus
+- Better UI / UX experience: better color scheme, typography, keyboard navigation
 
 In addition, I'm not thrilled with the organization of this project as a whole. React is still a very new concept and the best practices for defining & handling state are beyond me at this point. However, I'm motivated to learn and improve as time goes on.
 
