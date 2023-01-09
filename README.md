@@ -89,6 +89,7 @@ As much as I would've liked to continue working on this project, I didn't want t
 - Product sorting: by price, by name
 - Product filtering: by category, by price ranges
 - Individual product pages: showcasing large images & full descriptions
+- Size drop downs for clothing & jewelry items
 - Animation and transitions between pages
 - Checkout page with address & payment fields
 - Better UI / UX experience: better color scheme, typography, keyboard navigation, drop down menus
