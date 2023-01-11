@@ -1,0 +1,39 @@
+footer {
+  margin-top: auto;
+  padding: 1rem;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--clr-neutral-900);
+  color: var(--clr-neutral-100);
+
+  font-size: 1rem;
+  text-transform: uppercase;
+
+  .github-svg {
+    width: 1.5rem;
+    aspect-ratio: 1/1;
+  }
+
+  .git-link,
+  .git-link:visited,
+  .git-link:active {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+
+    font-weight: var(--fw-r);
+    text-decoration: none;
+    text-transform: uppercase;
+
+    color: var(--clr-neutral-200);
+
+    transition: var(--transition);
+
+    &:hover {
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+  }
+}

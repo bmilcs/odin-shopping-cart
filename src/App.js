@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
@@ -120,6 +121,7 @@ function App() {
           <Route path="/*" element={<Error />} />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }
