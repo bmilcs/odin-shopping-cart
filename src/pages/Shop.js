@@ -7,7 +7,7 @@ function Shop({ onAddToCart, productList, isFetching }) {
     <div className="inside">
       <div className="product-grid">
         {isFetching ? (
-          <p>Loading items...</p>
+          <h1>Loading Inventory...</h1>
         ) : (
           [...productList].sort().map((item) => {
             return (
