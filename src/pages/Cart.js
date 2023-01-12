@@ -41,7 +41,7 @@ function Cart({
           </Link>
         </div>
       ) : (
-        // {/* filled cart: item list, w/ -/+ buttons for changing qty*/}
+        // cart with 1+ items
         <>
           <div className="cart-page-wrapper">
             <h1 className="cart-title">Shopping Cart</h1>
@@ -73,8 +73,6 @@ function Cart({
               />
               <button className="checkout-button">Check Out</button>
             </div>
-
-            {/* checkout button */}
           </div>
         </>
       )}
